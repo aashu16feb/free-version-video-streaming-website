@@ -154,12 +154,13 @@
         <div class="video-block section-padding">
             <div class="row" id="videos-section">
 
-                <% videos.forEach(function (video) { %>
+                <% videos.forEach(function (video) {%>
                     <div class="col-xl-3 col-sm-6 mb-3">
                         <div class="video-card">
                             <div class="video-card-image">
-                                <a class="play-icon" href="watch?v=<%= video.watch %>"><i
+                                <a class="play-icon" href="http://localhost:3002/watch?v=<%= video.watch %>"><i
                                         class="fas fa-play-circle"></i></a>
+                                
                                 <a href="../watch?v=63e3ce755fbdf92bac8538f4">
                                     <img class="thumbnail" src="../public/thumbnails/1674492999418-en2.JPG"
                                         style="width: 270px; height: 169px;">

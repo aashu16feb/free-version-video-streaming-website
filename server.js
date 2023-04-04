@@ -140,63 +140,54 @@ http.listen(3002, function () {
           id: decoded._id,
         };
 
-        const allPlayist = await PlayList.find({});
+        
+        console.log("ABC",data)
+        var options = {
+          method: "POST",
 
-        // var options = {
-        //   method: "POST",
+          // http:flaskserverurl:port/route
+          uri: "http://127.0.0.1:5000/recommendcourse",
+          body: data,
 
-        //   // http:flaskserverurl:port/route
-        //   uri: "http://127.0.0.1:5000/recommendcourse",
-        //   body: data,
+          // Automatically stringifies
+          // the body to JSON
+          json: true,
+        };
+        var sendrequest = request(options)
+          // The parsedBody contains the data
+          // sent back from the Flask server
+          .then((parsedBody) => {
+            // You can do something with
+            // returned data
+            console.log("XYZ",parsedBody["result"])
+            return parsedBody["result"];
 
-        //   // Automatically stringifies
-        //   // the body to JSON
-        //   json: true,
-        // };
-        // var sendrequest = request(options)
-        //   // The parsedBody contains the data
-        //   // sent back from the Flask server
-        //   .then((parsedBody) => {
-        //     // You can do something with
-        //     // returned data
-        //     return parsedBody["result"];
-
-        //     //result1.push(result)
-        //     // if(Array.isArray(result)){
-        //     //   res=result
-        //     // }
-        //     // else{
-        //     //   res=[result]
-        //     // }
-        //     // findParams = {
-        //     //   ...findParams,
-        //     //   title: {
-        //     //     $in : result ,
-        //     //   },
-        //     // };
-        //   })
-        //   .catch((err) => {
-        //     console.log(err);
-        //   });
-        //console.log("bvsysh",sendrequest)
-        //  let recommend=async()=>{
-        //    const res=await sendrequest;
-        //    console.log(res);
-        //    return res;
-        //  }
-        // let recommend = () => {
-        //   sendrequest.then((res)=>{
-        //     console.log("Hii",res)
-        //     return res;
-        //   });
-        // }
-        // setTimeout(() => {
-
-        // }, 5);
-        // let result1 = await sendrequest;
-        // console.log("Hii", result1);
+            //result1.push(result)
+            // if(Array.isArray(result)){
+            //   res=result
+            // }
+            // else{
+            //   res=[result]
+            // }
+            // findParams = {
+            //   ...findParams,
+            //   title: {
+            //     $in : result ,
+            //   },
+            // };
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+        let result1 = await sendrequest;
+        console.log("Hii", result1);
         // res.send(result1);
-
+        findParams = {
+          playListName: {
+            $in : result1 ,
+          },
+       };
+        const allPlayist = await PlayList.find(findParams);
         res.send(allPlayist);
       });
 
@@ -721,6 +712,7 @@ http.listen(3002, function () {
       });
 
       app.get("/watch", function (request, result) {
+       
         database.collection("videos").findOne(
           {
             watch: parseInt(request.query.v),
